@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.2.4.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
+    <groupId>com.lohtech</groupId>
+    <artifactId>swarm</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+
+
+    <modules>
+        <module>swarm-common</module>
+        <module>swarm-model</module>
+        <module>swarm-security</module>
+        <module>swarm-user</module>
+    </modules>
+
+    <properties>
+        <java.version>1.8</java.version>
+        <mysql-connector.version>5.1.47</mysql-connector.version>
+
+        <swagger2.version>2.9.2</swagger2.version>
+        <hutool.version>5.1.2</hutool.version>
+        <jjwt.version>0.9.0</jjwt.version>
+
+        <swarm-common.version>0.0.1-SNAPSHOT</swarm-common.version>
+        <swarm-model.version>0.0.1-SNAPSHOT</swarm-model.version>
+        <swarm-security.version>0.0.1-SNAPSHOT</swarm-security.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <!--Mysql数据库驱动-->
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql-connector.version}</version>
+            </dependency>
+
+            <!-- Hutool Java 工具包 -->
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
+
+            <!-- Swagger-UI API 文档工具 -->
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>${swagger2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-ui</artifactId>
+                <version>${swagger2.version}</version>
+            </dependency>
+
+            <!-- JWT -->
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt</artifactId>
+                <version>${jjwt.version}</version>
+            </dependency>
+
+            <!-- 自研依赖包 -->
+            <dependency>
+                <groupId>com.lohtech</groupId>
+                <artifactId>swarm-common</artifactId>
+                <version>${swarm-common.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.lohtech</groupId>
+                <artifactId>swarm-model</artifactId>
+                <version>${swarm-model.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.lohtech</groupId>
+                <artifactId>swarm-security</artifactId>
+                <version>${swarm-security.version}</version>
+            </dependency>
+        </dependencies>
+
+    </dependencyManagement>
+
+</project>
