@@ -42,8 +42,8 @@ public class UmsAdminServiceImpl implements UmsAdminService {
     @Resource
     UmsAdminMapper adminMapper;
 
-    @Autowired
-    UmsAdminRoleRelationDao adminRoleRelationDao;
+//    @Autowired
+//    UmsAdminRoleRelationDao adminRoleRelationDao;
 
     @Override
     public UmsAdmin getAdminByUsername(String username) {
@@ -58,6 +58,9 @@ public class UmsAdminServiceImpl implements UmsAdminService {
 
     @Override
     public UmsAdmin register(UmsAdminParam param) {
+
+        LOGGER.info("--------------->>>>>>>>>>> hello");
+
         UmsAdmin admin = new UmsAdmin();
         BeanUtil.copyProperties(param, admin);
         admin.setCreateTime(new Date());
@@ -79,86 +82,86 @@ public class UmsAdminServiceImpl implements UmsAdminService {
         return admin;
     }
 
-    @Override
-    public String login(String username, String password) {
-        String token = null;
-        try {
-            UserDetails userDetails = loadUserByUsername(username);
-            if (! passwordEncoder.matches(password, userDetails.getPassword())) {
-                throw new BadCredentialsException("密码不正确");
-            }
-
-            UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-            SecurityContextHolder.getContext().setAuthentication(auth);
-            token = jwtUtil.generateToken(userDetails);
-            //NOTE 插入log表
-        } catch (AuthenticationException e) {
-            LOGGER.warn("登录异常：{}", e.getMessage());
-        }
-
-        return token;
-    }
-
-    @Override
-    public List<UmsPermission> getPermissionList(Long adminId) {
-        return adminRoleRelationDao.getPermissionList(adminId);
-    }
-
-    @Override
-    public UserDetails loadUserByUsername(String username) {
-        UmsAdmin admin = getAdminByUsername(username);
-        if (admin != null) {
-            List<UmsPermission> permissionList = getPermissionList(admin.getId());
-            return new AdminUserDetails(admin, permissionList);
-        }
-        throw new UsernameNotFoundException("用户名或密码错误");
-    }
-
-    public static class AdminUserDetails implements UserDetails {
-        private UmsAdmin umsAdmin;
-        private List<UmsPermission> permissionList;
-        public AdminUserDetails(UmsAdmin umsAdmin,List<UmsPermission> permissionList) {
-            this.umsAdmin = umsAdmin;
-            this.permissionList = permissionList;
-        }
-
-        @Override
-        public Collection<? extends GrantedAuthority> getAuthorities() {
-            //返回当前用户的权限
-            return permissionList.stream()
-                    .filter(permission -> permission.getValue()!=null)
-                    .map(permission ->new SimpleGrantedAuthority(permission.getValue()))
-                    .collect(Collectors.toList());
-        }
-
-        @Override
-        public String getPassword() {
-            return umsAdmin.getPassword();
-        }
-
-        @Override
-        public String getUsername() {
-            return umsAdmin.getUsername();
-        }
-
-        @Override
-        public boolean isAccountNonExpired() {
-            return true;
-        }
-
-        @Override
-        public boolean isAccountNonLocked() {
-            return true;
-        }
-
-        @Override
-        public boolean isCredentialsNonExpired() {
-            return true;
-        }
-
-        @Override
-        public boolean isEnabled() {
-            return umsAdmin.getStatus().equals(1);
-        }
-    }
+//    @Override
+//    public String login(String username, String password) {
+//        String token = null;
+//        try {
+//            UserDetails userDetails = loadUserByUsername(username);
+//            if (! passwordEncoder.matches(password, userDetails.getPassword())) {
+//                throw new BadCredentialsException("密码不正确");
+//            }
+//
+//            UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+//            SecurityContextHolder.getContext().setAuthentication(auth);
+//            token = jwtUtil.generateToken(userDetails);
+//            //NOTE 插入log表
+//        } catch (AuthenticationException e) {
+//            LOGGER.warn("登录异常：{}", e.getMessage());
+//        }
+//
+//        return token;
+//    }
+//
+//    @Override
+//    public List<UmsPermission> getPermissionList(Long adminId) {
+//        return adminRoleRelationDao.getPermissionList(adminId);
+//    }
+//
+//    @Override
+//    public UserDetails loadUserByUsername(String username) {
+//        UmsAdmin admin = getAdminByUsername(username);
+//        if (admin != null) {
+//            List<UmsPermission> permissionList = getPermissionList(admin.getId());
+//            return new AdminUserDetails(admin, permissionList);
+//        }
+//        throw new UsernameNotFoundException("用户名或密码错误");
+//    }
+//
+//    public static class AdminUserDetails implements UserDetails {
+//        private UmsAdmin umsAdmin;
+//        private List<UmsPermission> permissionList;
+//        public AdminUserDetails(UmsAdmin umsAdmin,List<UmsPermission> permissionList) {
+//            this.umsAdmin = umsAdmin;
+//            this.permissionList = permissionList;
+//        }
+//
+//        @Override
+//        public Collection<? extends GrantedAuthority> getAuthorities() {
+//            //返回当前用户的权限
+//            return permissionList.stream()
+//                    .filter(permission -> permission.getValue()!=null)
+//                    .map(permission ->new SimpleGrantedAuthority(permission.getValue()))
+//                    .collect(Collectors.toList());
+//        }
+//
+//        @Override
+//        public String getPassword() {
+//            return umsAdmin.getPassword();
+//        }
+//
+//        @Override
+//        public String getUsername() {
+//            return umsAdmin.getUsername();
+//        }
+//
+//        @Override
+//        public boolean isAccountNonExpired() {
+//            return true;
+//        }
+//
+//        @Override
+//        public boolean isAccountNonLocked() {
+//            return true;
+//        }
+//
+//        @Override
+//        public boolean isCredentialsNonExpired() {
+//            return true;
+//        }
+//
+//        @Override
+//        public boolean isEnabled() {
+//            return umsAdmin.getStatus().equals(1);
+//        }
+//    }
 }

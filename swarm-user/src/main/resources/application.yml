@@ -12,3 +12,19 @@ mybatis:
   mapper-locations:
     - classpath:dao/*.xml
     - classpath*:com/lohtech/model/**/*.xml
+
+
+secure:
+  ignored:
+    urls:
+      - /swagger-ui.html
+      - /swagger-resources/**
+      - /swagger/**
+      - /webjars/springfox-swagger-ui/**
+      - /**/v2/api-docs
+      - /**/*.js
+      - /**/*.png
+      - /**/*.ico
+      - /admin/register
+      - /admin/login
+      - /admin/foo

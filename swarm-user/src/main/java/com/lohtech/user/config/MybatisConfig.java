@@ -6,6 +6,6 @@ import tk.mybatis.spring.annotation.MapperScan;
 
 @Configuration
 @EnableTransactionManagement
-@MapperScan({"com.lohtech.model.user.dao"})
+@MapperScan({"com.lohtech.model.user.dao", "com.lohtech.user.dao"})
 public class MybatisConfig {
 }

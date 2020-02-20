@@ -32,4 +32,10 @@ public class UmsAdminController {
         }
     }
 
+    @GetMapping(value = "/foo")
+    @ResponseBody
+    public Object foo() {
+        return "foo";
+    }
+
 }
